@@ -1,0 +1,76 @@
+[gd_scene load_steps=5 format=3 uid="uid://dugjn3htknd7e"]
+
+[ext_resource type="Script" path="res://scenes/game_over.gd" id="1_h6dcw"]
+[ext_resource type="PackedScene" uid="uid://c27ih5ixj2tje" path="res://scenes/level.tscn" id="2_vy04c"]
+[ext_resource type="AudioStream" uid="uid://bfilm8qnk254q" path="res://assets/sprites/Bonus/8-bit-classic-arcade-game-116832.mp3" id="3_0x8iu"]
+
+[sub_resource type="SystemFont" id="SystemFont_q8q21"]
+font_names = PackedStringArray("Ink Free")
+
+[node name="GameOver" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_h6dcw")
+level_scene = ExtResource("2_vy04c")
+
+[node name="BG" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.227451, 0.180392, 0.247059, 1)
+metadata/_edit_lock_ = true
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_q8q21")
+theme_override_font_sizes/font_size = 60
+text = "Game Over"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Score: "
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 20
+
+[node name="Label" type="Label" parent="MarginContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Press space to start again"
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_0x8iu")
+volume_db = -2.579
+autoplay = true

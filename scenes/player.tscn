@@ -1,0 +1,77 @@
+[gd_scene load_steps=10 format=3 uid="uid://bvwwtlxs0abwl"]
+
+[ext_resource type="Texture2D" uid="uid://bdwvuectpe2jy" path="res://assets/sprites/PNG/playerShip1_blue.png" id="1_mrmx0"]
+[ext_resource type="Script" path="res://scenes/player.gd" id="1_sy56o"]
+[ext_resource type="AudioStream" uid="uid://ckwylmwfixvpj" path="res://assets/sprites/Bonus/sfx_laser1.ogg" id="3_3wwus"]
+[ext_resource type="AudioStream" uid="uid://cfytxnunnsdej" path="res://assets/sprites/Bonus/sfx_shieldDown.ogg" id="4_qtaat"]
+
+[sub_resource type="Gradient" id="Gradient_2qjey"]
+offsets = PackedFloat32Array(0, 0.41958, 0.678322, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.362329, 0.362329, 0.362329, 1, 0.692308, 0.692308, 0.692308, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2vhky"]
+gradient = SubResource("Gradient_2qjey")
+
+[sub_resource type="Curve" id="Curve_5p727"]
+_data = [Vector2(0, 1), 0.0, -1.03267, 0, 0, Vector2(1, 0), -4.01449, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_7ehpd"]
+curve = SubResource("Curve_5p727")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_sbf3w"]
+lifetime_randomness = 0.2
+particle_flag_disable_z = true
+angle_max = 378.2
+gravity = Vector3(0, 98, 0)
+scale_min = 2.0
+scale_max = 10.0
+scale_curve = SubResource("CurveTexture_7ehpd")
+color = Color(1, 0.756863, 0.45098, 1)
+color_ramp = SubResource("GradientTexture1D_2vhky")
+anim_speed_min = 1.94
+anim_speed_max = 12.44
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 6
+script = ExtResource("1_sy56o")
+
+[node name="PlayerImage" type="Sprite2D" parent="."]
+texture = ExtResource("1_mrmx0")
+
+[node name="LaserStartPos" type="Marker2D" parent="."]
+position = Vector2(0, -64)
+
+[node name="LaserTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="LaserSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_3wwus")
+volume_db = 14.0
+
+[node name="DamageSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_qtaat")
+volume_db = 14.0
+pitch_scale = 1.5
+
+[node name="Camera2D" type="Camera2D" parent="."]
+enabled = false
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(0, 39)
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_sbf3w")
+lifetime = 0.2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-10, -40, 7, -39, 11, -13, 32, 0, 48, -7, 48, 24, 14, 29, 6, 39, -7, 39, -17, 29, -46, 22, -52, -7, -34, 2, -13, -14)
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitbox"]
+polygon = PackedVector2Array(-10, -40, 7, -39, 11, -13, 32, 0, 48, -7, 48, 24, 14, 29, 6, 39, -7, 39, -17, 29, -46, 22, -52, -7, -34, 2, -13, -14)
+
+[connection signal="timeout" from="LaserTimer" to="." method="_on_laser_timer_timeout"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]

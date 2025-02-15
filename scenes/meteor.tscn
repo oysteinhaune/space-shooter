@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://ci8kfa0aorxj3"]
+
+[ext_resource type="Script" path="res://scenes/meteor.gd" id="1_2fpem"]
+[ext_resource type="AudioStream" uid="uid://drdgofql7vm1" path="res://assets/sprites/Bonus/sfx_zap.ogg" id="2_t4rux"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u5dhy"]
+radius = 38.0
+
+[node name="Meteor" type="Area2D"]
+collision_layer = 2
+collision_mask = 9
+script = ExtResource("1_2fpem")
+
+[node name="MeteorImage" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_u5dhy")
+
+[node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_t4rux")
+volume_db = 10.0
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

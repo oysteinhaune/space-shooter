@@ -1,0 +1,140 @@
+[gd_scene load_steps=12 format=3 uid="uid://c27ih5ixj2tje"]
+
+[ext_resource type="PackedScene" uid="uid://bvwwtlxs0abwl" path="res://scenes/player.tscn" id="1_8j0nm"]
+[ext_resource type="Script" path="res://scenes/level.gd" id="1_tadhq"]
+[ext_resource type="Texture2D" uid="uid://bb5dcssyn7tpc" path="res://assets/sprites/Backgrounds/darkPurple.png" id="2_g88u4"]
+[ext_resource type="Texture2D" uid="uid://ig7bsnsceu4i" path="res://assets/sprites/PNG/Effects/star1.png" id="3_yam86"]
+[ext_resource type="Texture2D" uid="uid://bo5a4mt444hyj" path="res://assets/sprites/PNG/Effects/star2.png" id="4_rfvth"]
+[ext_resource type="Texture2D" uid="uid://bvhta03ddisc7" path="res://assets/sprites/PNG/Effects/star3.png" id="5_nccoy"]
+[ext_resource type="PackedScene" uid="uid://u6vscqlqgxvf" path="res://scenes/ui.tscn" id="7_wqrbw"]
+[ext_resource type="AudioStream" uid="uid://dfjbi2aqj00sl" path="res://assets/sprites/Bonus/chiptune-hard-boss-mode-218071.mp3" id="8_dgvxe"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bo7ry"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_yam86")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_rfvth")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_nccoy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nlop1"]
+size = Vector2(28, 758.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sjsc2"]
+size = Vector2(1290, 20)
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_tadhq")
+
+[node name="BackgroundImage" type="Sprite2D" parent="."]
+position = Vector2(644.5, 359)
+scale = Vector2(5.12109, 2.94531)
+texture = ExtResource("2_g88u4")
+metadata/_edit_lock_ = true
+
+[node name="Stars" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Stars"]
+sprite_frames = SubResource("SpriteFrames_bo7ry")
+autoplay = "default"
+frame_progress = 0.677486
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Stars"]
+sprite_frames = SubResource("SpriteFrames_bo7ry")
+autoplay = "default"
+frame_progress = 0.8758
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="Stars"]
+sprite_frames = SubResource("SpriteFrames_bo7ry")
+autoplay = "default"
+frame_progress = 0.8758
+
+[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="Stars"]
+sprite_frames = SubResource("SpriteFrames_bo7ry")
+autoplay = "default"
+frame_progress = 0.8758
+
+[node name="AnimatedSprite2D5" type="AnimatedSprite2D" parent="Stars"]
+sprite_frames = SubResource("SpriteFrames_bo7ry")
+autoplay = "default"
+frame_progress = 0.8758
+
+[node name="AnimatedSprite2D6" type="AnimatedSprite2D" parent="Stars"]
+sprite_frames = SubResource("SpriteFrames_bo7ry")
+autoplay = "default"
+frame_progress = 0.8758
+
+[node name="AnimatedSprite2D7" type="AnimatedSprite2D" parent="Stars"]
+sprite_frames = SubResource("SpriteFrames_bo7ry")
+autoplay = "default"
+frame_progress = 0.8758
+
+[node name="AnimatedSprite2D8" type="AnimatedSprite2D" parent="Stars"]
+sprite_frames = SubResource("SpriteFrames_bo7ry")
+autoplay = "default"
+frame_progress = 0.8758
+
+[node name="Player" parent="." instance=ExtResource("1_8j0nm")]
+z_index = 1
+scale = Vector2(0.4, 0.4)
+
+[node name="Borders" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="Right" type="StaticBody2D" parent="Borders"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Right"]
+position = Vector2(1290, 364.25)
+shape = SubResource("RectangleShape2D_nlop1")
+
+[node name="Left" type="StaticBody2D" parent="Borders"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Left"]
+position = Vector2(-11, 364.25)
+shape = SubResource("RectangleShape2D_nlop1")
+
+[node name="Top" type="StaticBody2D" parent="Borders"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Top"]
+position = Vector2(642, -7)
+shape = SubResource("RectangleShape2D_sjsc2")
+
+[node name="Bottom" type="StaticBody2D" parent="Borders"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Bottom"]
+position = Vector2(639, 726)
+shape = SubResource("RectangleShape2D_sjsc2")
+
+[node name="MeteorTimer" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
+[node name="Meteors" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="Lazers" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="UI" parent="." instance=ExtResource("7_wqrbw")]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_dgvxe")
+autoplay = true
+
+[connection signal="collision" from="Player" to="." method="_on_player_collision"]
+[connection signal="laser" from="Player" to="." method="_on_player_laser"]
+[connection signal="timeout" from="MeteorTimer" to="." method="_on_meteor_timer_timeout"]
