@@ -19,13 +19,7 @@ func _ready():
 		star.scale = Vector2(random_scale, random_scale)
 		
 		star.speed_scale = rng.randf_range(0.6, 1.4)
-		
-func print_meteor_count():
-	print("Number of meteors: ", $Meteors.get_child_count())
 	
-func _process(delta):
-	print_meteor_count()
-
 func _on_meteor_timer_timeout():
 	var meteor = meteor_scene.instantiate()
 	

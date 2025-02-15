@@ -34,5 +34,3 @@ func _on_laser_timer_timeout():
 
 func _on_hitbox_area_entered(_area):
 	collision.emit()
-
-// comment
