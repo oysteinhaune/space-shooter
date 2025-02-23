@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bo5a4mt444hyj" path="res://assets/sprites/PNG/Effects/star2.png" id="4_rfvth"]
 [ext_resource type="Texture2D" uid="uid://bvhta03ddisc7" path="res://assets/sprites/PNG/Effects/star3.png" id="5_nccoy"]
 [ext_resource type="PackedScene" uid="uid://u6vscqlqgxvf" path="res://scenes/ui.tscn" id="7_wqrbw"]
-[ext_resource type="AudioStream" uid="uid://dfsmkts3r7dyp" path="res://assets/sprites/Bonus/chiptune-hard-boss-mode-218071.wav" id="8_dgvxe"]
+[ext_resource type="AudioStream" uid="uid://dhfndsw37x3lg" path="res://assets/sprites/Bonus/chiptune-hard-boss-mode-218071.ogg" id="8_dgvxe"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_bo7ry"]
 animations = [{
