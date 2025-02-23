@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/game_over.gd" id="1_h6dcw"]
 [ext_resource type="PackedScene" uid="uid://c27ih5ixj2tje" path="res://scenes/level.tscn" id="2_vy04c"]
-[ext_resource type="AudioStream" uid="uid://bfilm8qnk254q" path="res://assets/sprites/Bonus/8-bit-classic-arcade-game-116832.mp3" id="3_0x8iu"]
+[ext_resource type="AudioStream" uid="uid://bq5gmgfifos5o" path="res://assets/sprites/Bonus/8-bit-classic-arcade-game-116832.wav" id="3_0x8iu"]
 
 [sub_resource type="SystemFont" id="SystemFont_q8q21"]
 font_names = PackedStringArray("Ink Free")
