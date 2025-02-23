@@ -1,10 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://yf7myql71ip5"]
+[gd_scene load_steps=11 format=3 uid="uid://yf7myql71ip5"]
 
 [ext_resource type="Script" path="res://scenes/boss_scene.gd" id="1_td50x"]
 [ext_resource type="Texture2D" uid="uid://bb5dcssyn7tpc" path="res://assets/sprites/Backgrounds/darkPurple.png" id="2_ow62i"]
 [ext_resource type="PackedScene" uid="uid://bvwwtlxs0abwl" path="res://scenes/player.tscn" id="3_gf0ad"]
 [ext_resource type="PackedScene" uid="uid://4tgvvqe2lbdd" path="res://scenes/boss_1_character.tscn" id="4_36g2e"]
 [ext_resource type="Script" path="res://scenes/boss_1_character.gd" id="5_voi54"]
+[ext_resource type="AudioStream" uid="uid://clg1lsw8ua4wq" path="res://assets/sprites/Bonus/chiptune-boss-fight-music-265080.mp3" id="6_r6f3w"]
+[ext_resource type="PackedScene" uid="uid://u6vscqlqgxvf" path="res://scenes/ui.tscn" id="7_ixfgr"]
+[ext_resource type="Script" path="res://scenes/boss-ui.gd" id="8_stla8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u8hmk"]
 size = Vector2(28, 758.5)
@@ -71,7 +74,15 @@ metadata/_edit_lock_ = true
 wait_time = 6.0
 autostart = true
 
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_r6f3w")
+autoplay = true
+
+[node name="UI" parent="." instance=ExtResource("7_ixfgr")]
+script = ExtResource("8_stla8")
+
 [connection signal="collision" from="Player" to="." method="_on_player_collision"]
 [connection signal="laser" from="Player" to="." method="_on_player_laser"]
 [connection signal="area_entered" from="Boss1Character" to="." method="_on_boss_1_character_area_entered"]
 [connection signal="timeout" from="BossLaserTimer" to="Boss1Character" method="_on_boss_lazer_timer_timeout"]
+[connection signal="finished" from="Music" to="." method="_on_music_finished"]

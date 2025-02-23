@@ -3,8 +3,7 @@
 [ext_resource type="Script" path="res://scenes/meteor.gd" id="1_2fpem"]
 [ext_resource type="AudioStream" uid="uid://drdgofql7vm1" path="res://assets/sprites/Bonus/sfx_zap.ogg" id="2_t4rux"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_u5dhy"]
-radius = 38.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_buj4x"]
 
 [node name="Meteor" type="Area2D"]
 collision_layer = 2
@@ -14,11 +13,14 @@ script = ExtResource("1_2fpem")
 [node name="MeteorImage" type="Sprite2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_u5dhy")
+shape = SubResource("RectangleShape2D_buj4x")
 
 [node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_t4rux")
 volume_db = 10.0
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

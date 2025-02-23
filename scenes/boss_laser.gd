@@ -11,3 +11,6 @@ func _ready():
 
 func _process(delta):
 	position.y += speed * delta  # This moves the object down
+
+func _on_visible_on_screen_notifier_2d_screen_exited():
+	queue_free()

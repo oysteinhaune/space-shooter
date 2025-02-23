@@ -2,8 +2,8 @@ extends Area2D
 
 var speed = 500  # Movement speed (pixels per second)
 var direction = 1  # 1 = right, -1 = left
-var min_x = 300  # Left boundary
-var max_x = 900  # Right boundary
+var min_x = 40  # Left boundary
+var max_x = 1200  # Right boundary
 signal boss_laser(pos)
 
 # You can adjust the timer time here to control how often the lasers shoot.
@@ -39,3 +39,8 @@ func move(delta):
 func _on_laser_timeout():
 	# Emit the signal to spawn the laser at the start position
 	boss_laser.emit($LaserStartPos.global_position)  # Emit signal (ensure laser node exists)
+
+func _on_body_entered(area):
+	if area.is_in_group("lasers"):
+		print("Laser hit the boss!")
+		area.queue_free()

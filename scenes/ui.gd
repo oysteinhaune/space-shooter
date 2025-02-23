@@ -18,5 +18,5 @@ func _on_score_timer_timeout():
 	time_elapsed += 1
 	$MarginContainer/Label.text = str(time_elapsed)
 	Global.score = time_elapsed
-	if(time_elapsed == 60):
+	if(time_elapsed == 30):
 		get_tree().change_scene_to_file("res://scenes/boss_scene.tscn")
