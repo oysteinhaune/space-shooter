@@ -33,7 +33,7 @@ func adjust_collision_shape():
 	var collision_shape = $CollisionShape2D
 	if collision_shape.shape is RectangleShape2D:
 		var texture_size = $MeteorImage.texture.get_size()
-		collision_shape.shape.extents = texture_size / 2
+		collision_shape.shape.extents = texture_size / 2 * 1.2
 
 
 func _process(delta):
@@ -53,5 +53,4 @@ func _on_area_entered(area):
 	queue_free()
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
-	print("removed")
 	queue_free()

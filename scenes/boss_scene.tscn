@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bvwwtlxs0abwl" path="res://scenes/player.tscn" id="3_gf0ad"]
 [ext_resource type="PackedScene" uid="uid://4tgvvqe2lbdd" path="res://scenes/boss_1_character.tscn" id="4_36g2e"]
 [ext_resource type="Script" path="res://scenes/boss_1_character.gd" id="5_voi54"]
-[ext_resource type="AudioStream" uid="uid://cewl2b7u42eon" path="res://assets/sprites/Bonus/chiptune-boss-fight-music-265080.ogg" id="6_tnmgo"]
+[ext_resource type="AudioStream" uid="uid://chulucnx2c2mg" path="res://assets/sprites/Bonus/chiptune-boss-fight-music-265080.ogg" id="6_tnmgo"]
 [ext_resource type="PackedScene" uid="uid://u6vscqlqgxvf" path="res://scenes/ui.tscn" id="7_ixfgr"]
 [ext_resource type="Script" path="res://scenes/boss-ui.gd" id="8_stla8"]
 
