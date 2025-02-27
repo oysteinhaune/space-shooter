@@ -28,9 +28,6 @@ stream = ExtResource("4_qtaat")
 volume_db = 14.0
 pitch_scale = 1.5
 
-[node name="Camera2D" type="Camera2D" parent="."]
-enabled = false
-
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-10, -40, 7, -39, 11, -13, 32, 0, 48, -7, 48, 24, 14, 29, 6, 39, -7, 39, -17, 29, -46, 22, -52, -7, -34, 2, -13, -14)
 
