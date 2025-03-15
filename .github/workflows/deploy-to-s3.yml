@@ -32,6 +32,10 @@ jobs:
             --paths "/*" \
             --query 'Invalidation.Id' --output text)
 
+          # Set the Invalidation ID as an environment variable
+          echo "INVALIDATION_ID=$INVALIDATION_ID" >> $GITHUB_ENV
+
+          # Optional: Print the Invalidation ID
           echo "CloudFront Invalidation ID: $INVALIDATION_ID"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
