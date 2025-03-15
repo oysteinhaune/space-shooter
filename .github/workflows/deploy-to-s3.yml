@@ -3,7 +3,7 @@ name: Deploy to S3
 on:
   push:
     branches:
-      - main  # Change this to your default branch if it's not "main"
+      - main
 
 jobs:
   deploy:
@@ -20,9 +20,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Sync web export to S3
+      - name: Sync web export to S3 with cache control
         run: |
-          aws s3 sync ./export/web/ s3://${{ secrets.S3_BUCKET_NAME }} --delete
+          aws s3 sync ./export/web/ s3://${{ secrets.S3_BUCKET_NAME }} --delete \
+            --cache-control "no-cache, no-store, must-revalidate" \
+            --acl public-read
 
       - name: Invalidate CloudFront Cache
         run: |

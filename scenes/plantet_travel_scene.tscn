@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3wrghmth8arp"]
+
+[ext_resource type="PackedScene" uid="uid://bvwwtlxs0abwl" path="res://scenes/player.tscn" id="1_ulbef"]
+
+[node name="PlantetTravelScene" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_ulbef")]
+z_index = 1
+scale = Vector2(0.4, 0.4)
