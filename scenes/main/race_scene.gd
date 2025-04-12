@@ -21,7 +21,13 @@ var scroll_speed: float  # Actual speed that will gradually increase
 var road_tiles = []  # Store all road instances
 var has_spawned = false
 var engines_collected = 0
+var slowing_down = false
+var slowdown_timer = 0.0
+var slowdown_duration = 8.0
+var boss_spawn_triggered = false
 
+signal boss_spawned
+signal turn_off_enemies
 
 func _ready():
 	scroll_speed = initial_scroll_speed  # Set initial speed
@@ -35,19 +41,40 @@ func _ready():
 func _process(delta):
 	# Move roads downward
 	for road_tile in road_tiles:
-		road_tile.global_position.y += scroll_speed * delta  # Move road down
+		road_tile.global_position.y += scroll_speed * delta
 
-		# If road moves out of view, reposition it at the **top**
 		if road_tile.global_position.y > row_count * spawn_distance:
-			road_tile.global_position.y -= (row_count + 1) * spawn_distance  # Wrap back to top
+			road_tile.global_position.y -= (row_count + 1) * spawn_distance
 	
 	# Move drops in Engines
 	for drop in $Engines.get_children():
 		drop.global_position.y += scroll_speed * delta
-	
-	# Gradually increase speed, but clamp it to max_scroll_speed
-	scroll_speed += speed_increment * delta
-	scroll_speed = min(scroll_speed, max_scroll_speed)  # Ensure it doesn't exceed max_scroll_speed
+
+	# Gradually increase speed if not slowing down
+	if not slowing_down:
+		scroll_speed += speed_increment * delta
+		scroll_speed = min(scroll_speed, max_scroll_speed)
+	else:
+		emit_signal("turn_off_enemies")
+		slowdown_timer += delta
+		var t = clamp(slowdown_timer / slowdown_duration, 0, 1)
+		scroll_speed = lerp(initial_scroll_speed, 0.0, t)
+
+		if t >= 1.0 and not boss_spawn_triggered:
+			boss_spawn_triggered = true
+			print("Scroll speed is zero! Preparing to spawn boss...")
+			await get_tree().create_timer(4.0).timeout
+			spawn_boss()
+			
+func spawn_boss():
+	print("Boss is spawning now!")
+	emit_signal("boss_spawned")
+		
+func start_slowdown():
+	if not slowing_down:
+		slowing_down = true
+		slowdown_timer = 0.0
+		initial_scroll_speed = scroll_speed
 	
 func _on_player_laser(pos):
 	var laser = player_laser_scene.instantiate()
@@ -84,9 +111,9 @@ func _on_player_collision() -> void:
 	player_health -= 1
 	await flash_player()   # Wait for tween to finish
 
-	if player_health == 0:
-		await get_tree().create_timer(1.0).timeout
-		change_scene()
+	#if player_health == 0:
+		#await get_tree().create_timer(1.0).timeout
+		#change_scene()
 
 func change_scene():
 	call_deferred("_deferred_change_scene")
@@ -117,4 +144,8 @@ func flash_player() -> void:
 
 func _on_spawner_engine_collected():
 	engines_collected += 1
-	print('racescene engine_collected: ', engines_collected )
+	print("racescene engine_collected: ", engines_collected)
+
+	if engines_collected == 2:
+		print("2 engines collected! Slowing down scroll speed.")
+		start_slowdown()

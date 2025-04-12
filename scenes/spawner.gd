@@ -20,6 +20,7 @@ var offset_left = -200  # Horizontal offset for variation
 
 signal engine_collected
 
+
 # Initialization
 func _ready():
 	# Enemy spawning
@@ -79,6 +80,9 @@ func spawn_engine():
 
 	engines_node.add_child(engine)
 	
+func spawn_boss():
+	print('spawnBoss')
+	
 func _on_engine_picked_up():
 	emit_signal("engine_collected")
 	
@@ -90,3 +94,11 @@ func _on_enemy_ship_laser(laser_position: Vector2):
 	lasers_node.call_deferred("add_child", laser)
 	
 	laser.global_position = laser_position + Vector2(-14, 0)
+
+
+func _on_race_scene_boss_spawned():
+	spawn_boss()
+
+func _on_race_scene_turn_off_enemies():
+	$EnemyTimer.stop()
+	$EngineTimer.stop()

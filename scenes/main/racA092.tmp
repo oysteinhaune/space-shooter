@@ -65,10 +65,6 @@ shape = SubResource("RectangleShape2D_rydfk")
 
 [node name="Engines" type="Node2D" parent="."]
 
-[node name="Boss" type="Node2D" parent="."]
-
-[connection signal="boss_spawned" from="." to="Spawner" method="_on_race_scene_boss_spawned"]
-[connection signal="turn_off_enemies" from="." to="Spawner" method="_on_race_scene_turn_off_enemies"]
 [connection signal="collision" from="Player" to="." method="_on_player_collision"]
 [connection signal="laser" from="Player" to="." method="_on_player_laser"]
 [connection signal="engine_collected" from="Spawner" to="." method="_on_spawner_engine_collected"]
