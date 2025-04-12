@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://dmqfrxduiv0nf"]
+
+[ext_resource type="Script" path="res://scripts/enemy_ship.gd" id="1_m7vvn"]
+[ext_resource type="Texture2D" uid="uid://dpx2yd0xdssj1" path="res://assets/sprites/PNG/Enemies/enemyRed1.png" id="1_yc2ll"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gryqv"]
+size = Vector2(100, 92)
+
+[node name="Enemy" type="Area2D"]
+collision_layer = 2
+collision_mask = 9
+script = ExtResource("1_m7vvn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 1
+texture = ExtResource("1_yc2ll")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_gryqv")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-1, -61)
+
+[node name="LaserTimer" type="Timer" parent="."]
+wait_time = 0.901
+autostart = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

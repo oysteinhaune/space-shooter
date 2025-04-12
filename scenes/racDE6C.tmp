@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3wrghmth8arp"]
+
+[ext_resource type="Script" path="res://scenes/race_scene.gd" id="1_foj0r"]
+[ext_resource type="PackedScene" uid="uid://bvwwtlxs0abwl" path="res://scenes/player.tscn" id="1_h34do"]
+
+[node name="RaceScene" type="Node2D"]
+script = ExtResource("1_foj0r")
+
+[node name="Player" parent="." instance=ExtResource("1_h34do")]
+z_index = 1
+scale = Vector2(0.4, 0.4)
+
+[node name="Roads" type="Node2D" parent="."]
+
+[node name="RoadTimer" type="Timer" parent="."]
+wait_time = 0.213
+autostart = true
+
+[connection signal="timeout" from="RoadTimer" to="." method="_on_road_timer_timeout"]

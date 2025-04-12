@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://b0fiyofrfqq0s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fdsbs"]
+size = Vector2(131, 129)
+
+[node name="Road" type="Area2D"]
+
+[node name="Sprite" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, -0.5)
+shape = SubResource("RectangleShape2D_fdsbs")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
