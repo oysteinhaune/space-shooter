@@ -37,5 +37,10 @@ collision_mask = 2
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitbox"]
 polygon = PackedVector2Array(-10, -40, 7, -39, 11, -13, 32, 0, 48, -7, 48, 24, 14, 29, 6, 39, -7, 39, -17, 29, -46, 22, -52, -7, -34, 2, -13, -14)
 
+[node name="HitCooldownTimer" type="Timer" parent="."]
+wait_time = 14.285
+
+[node name="Lasers" type="Node" parent="."]
+
 [connection signal="timeout" from="LaserTimer" to="." method="_on_laser_timer_timeout"]
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]

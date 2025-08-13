@@ -1,108 +1,21 @@
 extends Node2D
 
 var health: int = 3
-var boss_health: int = 12
-
-var boss_laser_scene: PackedScene = load("res://scenes/boss_laser.tscn")
 var laser_scene: PackedScene = load("res://scenes/laser.tscn")
 var is_invincible = false
 var is_dead = false
 
 func _ready():
-	$Boss1Character.boss_laser.connect(_on_boss_laser)
 	get_tree().call_group('ui', 'set_health', health)
 	$UI/MarginContainer.queue_free()
-
-func _on_boss_laser(pos):
-	var laser = boss_laser_scene.instantiate()
-	$BossLasers.add_child(laser)
-	laser.position = pos
-
-func _on_player_laser(pos):
-	var laser = laser_scene.instantiate()
-	$Lazers.add_child(laser)
-	laser.position = pos
-	
-func _on_player_collision():
-	if is_dead or is_invincible:
-		return  # Ignore repeated collisions
-
-	if health > 0:
-		is_invincible = true
-		$Player.play_collision_sound()
-		await flash_player()
-		is_invincible = false  # Reset after flash (optional cooldown)
-
-	health -= 1
-	get_tree().call_group('ui', 'set_health', health)
-
-	if health <= 0:
-		is_dead = true
-		call_deferred("go_to_game_over")
+	var boss = $Boss1Character
+	boss.boss_defeated.connect(_on_boss_defeated)
 		
 func go_to_game_over():
 	get_tree().change_scene_to_file("res://scenes/game_over.tscn")
-
-func _on_boss_1_character_area_entered(area):
-	area.queue_free()
-	boss_health -= 1
-	print(boss_health)
-	
-	if boss_health > 0:
-		flash_and_stutter_boss()
-	else:
-		var boss_position = $Boss1Character.global_position
-		$Boss1Character.queue_free()
-		spawn_boss_engine(boss_position)
-		show_victory_message()
-
-func _on_boss_engine_collision(_body: Node) -> void:
-	call_deferred("_deferred_change_scene")
 	
 func _deferred_change_scene():
 	get_tree().change_scene_to_file("res://scenes/main/race_scene.tscn")
-		
-func spawn_boss_engine(spawn_position):
-	await get_tree().create_timer(0.1).timeout
-	var boss_engine_scene = load("res://scenes/boss_engine.tscn")
-	var boss_engine = boss_engine_scene.instantiate()
-	boss_engine.global_position = spawn_position
-	get_parent().add_child(boss_engine)
-	
-	if boss_engine:
-		var area2d_node = boss_engine.get_node("Area2D")
-		if area2d_node and has_method("_on_boss_engine_collision"):
-			area2d_node.connect("body_entered", Callable(self, "_on_boss_engine_collision"))
-		
-func flash_player():
-	var player = $Player
-	var player_image = $Player/PlayerImage
-	var tween = get_tree().create_tween()
-
-	player_image.modulate = Color(1, 0, 0)
-
-	var original_position = player.position
-	tween.tween_property(player, "position", original_position + Vector2(0, -10), 0.1)
-	tween.tween_property(player, "position", original_position, 0.1)
-
-	await tween.finished
-	if is_instance_valid(player_image):
-		player_image.modulate = Color(1, 1, 1)
-
-
-func flash_and_stutter_boss():
-	var boss = $Boss1Character
-	var boss_image = $Boss1Character/BossImage
-	var tween = get_tree().create_tween()
-
-	boss_image.modulate = Color(1, 0, 0)  
-	
-	var original_position = boss.position
-	tween.tween_property(boss, "position", original_position + Vector2(0, -10), 0.1)
-	tween.tween_property(boss, "position", original_position, 0.1)
-
-	await get_tree().create_timer(0.2).timeout  
-	boss_image.modulate = Color(1, 1, 1)
 
 func show_victory_message():
 	display_initial_message()
@@ -137,3 +50,8 @@ func display_victory_message():
 
 func _on_music_finished():
 	$Music.play()
+	
+func _on_boss_defeated():
+	print("Boss defeated! Start engine sequence...")
+
+

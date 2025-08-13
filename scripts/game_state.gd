@@ -1,0 +1,15 @@
+extends Node2D
+
+enum GameStateEnum {
+	IDLE,
+	PLAYING,
+	PLAYER_HIT,
+	PLAYER_DEAD,
+	BOSS_HIT,
+	BOSS_DEAD,
+	VICTORY,
+	TRANSITION
+}
+
+@export_enum("IDLE", "PLAYING", "PLAYER_HIT", "PLAYER_DEAD", "BOSS_HIT", "BOSS_DEAD", "VICTORY", "TRANSITION")
+var state := GameStateEnum.IDLE

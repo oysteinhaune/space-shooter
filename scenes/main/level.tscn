@@ -139,5 +139,4 @@ autoplay = true
 position = Vector2(636, 357)
 
 [connection signal="collision" from="Player" to="." method="_on_player_collision"]
-[connection signal="laser" from="Player" to="." method="_on_player_laser"]
 [connection signal="timeout" from="MeteorTimer" to="." method="_on_meteor_timer_timeout"]

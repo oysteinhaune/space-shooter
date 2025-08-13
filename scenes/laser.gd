@@ -6,6 +6,7 @@ extends Area2D
 func _ready():
 	var tween = create_tween()
 	tween.tween_property($LaserImage, 'scale', Vector2(1,1), 0.2).from(Vector2(0,0))
+	add_to_group("lasers")
 	
 	# Flip the texture based on move_direction
 	flip_texture()

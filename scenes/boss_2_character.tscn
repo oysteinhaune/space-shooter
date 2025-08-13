@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://ci0s85baul8lp"]
+
+[ext_resource type="Texture2D" uid="uid://cxg38h4wip7ud" path="res://assets/sprites/PNG/Enemies/enemyBlack1.png" id="1_3ufjl"]
+[ext_resource type="Script" path="res://scenes/boss_2_character.gd" id="1_iy4yr"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jdtjc"]
+radius = 46.0
+height = 98.0
+
+[node name="Boss1Character" type="Area2D"]
+collision_layer = 4
+collision_mask = 9
+script = ExtResource("1_iy4yr")
+
+[node name="BossImage" type="Sprite2D" parent="."]
+texture = ExtResource("1_3ufjl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
+shape = SubResource("CapsuleShape2D_jdtjc")
+
+[node name="BossLaserTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="BossLasers" type="Node" parent="."]

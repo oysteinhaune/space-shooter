@@ -1,0 +1,78 @@
+[gd_scene load_steps=8 format=3 uid="uid://d3wrghmth8arp"]
+
+[ext_resource type="Script" path="res://scenes/main/race_scene.gd" id="1_dspxx"]
+[ext_resource type="PackedScene" uid="uid://bvwwtlxs0abwl" path="res://scenes/player.tscn" id="2_xc7jj"]
+[ext_resource type="PackedScene" uid="uid://dtp24xgwck733" path="res://scenes/spawner.tscn" id="3_w4i6g"]
+[ext_resource type="PackedScene" uid="uid://u6vscqlqgxvf" path="res://scenes/ui.tscn" id="4_srst7"]
+[ext_resource type="Script" path="res://scenes/boss-ui.gd" id="5_70siy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rhfto"]
+size = Vector2(28, 758.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rydfk"]
+size = Vector2(1290, 20)
+
+[node name="RaceScene" type="Node2D"]
+script = ExtResource("1_dspxx")
+
+[node name="Player" parent="." instance=ExtResource("2_xc7jj")]
+z_index = 1
+scale = Vector2(0.4, 0.4)
+
+[node name="Roads" type="Node2D" parent="."]
+
+[node name="RoadTimer" type="Timer" parent="."]
+wait_time = 0.213
+autostart = true
+
+[node name="Lazers" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="Borders" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="Right" type="StaticBody2D" parent="Borders"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Right"]
+position = Vector2(1103, 364)
+shape = SubResource("RectangleShape2D_rhfto")
+
+[node name="Left" type="StaticBody2D" parent="Borders"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Left"]
+position = Vector2(176, 364)
+shape = SubResource("RectangleShape2D_rhfto")
+
+[node name="Top" type="StaticBody2D" parent="Borders"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Top"]
+position = Vector2(642, -7)
+shape = SubResource("RectangleShape2D_rydfk")
+
+[node name="Bottom" type="StaticBody2D" parent="Borders"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Bottom"]
+position = Vector2(639, 726)
+shape = SubResource("RectangleShape2D_rydfk")
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Spawner" parent="." instance=ExtResource("3_w4i6g")]
+
+[node name="EnemyLasers" type="Node2D" parent="."]
+
+[node name="Engines" type="Node2D" parent="."]
+
+[node name="Boss" type="Node2D" parent="."]
+
+[node name="UI" parent="." instance=ExtResource("4_srst7")]
+script = ExtResource("5_70siy")
+
+[connection signal="boss_spawned" from="." to="Spawner" method="_on_race_scene_boss_spawned"]
+[connection signal="turn_off_enemies" from="." to="Spawner" method="_on_race_scene_turn_off_enemies"]
+[connection signal="collision" from="Player" to="." method="_on_player_collision"]
+[connection signal="engine_collected" from="Spawner" to="." method="_on_spawner_engine_collected"]

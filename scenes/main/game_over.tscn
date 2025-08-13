@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dugjn3htknd7e"]
+[gd_scene load_steps=4 format=3 uid="uid://dugjn3htknd7e"]
 
 [ext_resource type="Script" path="res://scenes/main/game_over.gd" id="1_h6dcw"]
-[ext_resource type="PackedScene" uid="uid://c27ih5ixj2tje" path="res://scenes/main/level.tscn" id="2_vy04c"]
 [ext_resource type="AudioStream" uid="uid://b5auehho4omgd" path="res://assets/sprites/Bonus/8-bit-classic-arcade-game-116832.ogg" id="3_epjhj"]
 
 [sub_resource type="SystemFont" id="SystemFont_q8q21"]
@@ -15,7 +14,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_h6dcw")
-level_scene = ExtResource("2_vy04c")
 
 [node name="BG" type="ColorRect" parent="."]
 layout_mode = 1

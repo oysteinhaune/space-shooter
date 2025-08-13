@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://d3wrghmth8arp"]
+[gd_scene load_steps=8 format=3 uid="uid://d3wrghmth8arp"]
 
 [ext_resource type="Script" path="res://scenes/main/race_scene.gd" id="1_dspxx"]
 [ext_resource type="PackedScene" uid="uid://bvwwtlxs0abwl" path="res://scenes/player.tscn" id="2_xc7jj"]
 [ext_resource type="PackedScene" uid="uid://dtp24xgwck733" path="res://scenes/spawner.tscn" id="3_w4i6g"]
+[ext_resource type="PackedScene" uid="uid://u6vscqlqgxvf" path="res://scenes/ui.tscn" id="4_srst7"]
+[ext_resource type="Script" path="res://scenes/boss-ui.gd" id="5_70siy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rhfto"]
 size = Vector2(28, 758.5)
@@ -67,8 +69,10 @@ shape = SubResource("RectangleShape2D_rydfk")
 
 [node name="Boss" type="Node2D" parent="."]
 
+[node name="UI" parent="." instance=ExtResource("4_srst7")]
+script = ExtResource("5_70siy")
+
 [connection signal="boss_spawned" from="." to="Spawner" method="_on_race_scene_boss_spawned"]
 [connection signal="turn_off_enemies" from="." to="Spawner" method="_on_race_scene_turn_off_enemies"]
 [connection signal="collision" from="Player" to="." method="_on_player_collision"]
-[connection signal="laser" from="Player" to="." method="_on_player_laser"]
 [connection signal="engine_collected" from="Spawner" to="." method="_on_spawner_engine_collected"]
