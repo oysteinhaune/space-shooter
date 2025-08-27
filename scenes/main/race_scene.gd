@@ -30,6 +30,7 @@ var boss_spawn_triggered = false
 signal boss_spawned
 signal turn_off_enemies
 signal end_of_game
+signal player_died
 
 func _ready():
 	get_tree().call_group('ui', 'set_health', player_health)
@@ -155,3 +156,7 @@ func _on_spawner_engine_collected():
 	if engines_collected == 4:
 		print("4 engines collected! Slowing down scroll speed.")
 		start_slowdown()
+
+
+func _on_player_player_died():
+	player_died.emit()

@@ -75,6 +75,7 @@ func show_game_over():
 	await get_tree().process_frame
 	
 	var gameover_node = find_node_recursive(current_level, "GameOver")
+	engine_collected = false
 	
 	if gameover_node:
 		print(gameover_node)
@@ -174,7 +175,7 @@ func _on_engine_picked_up():
 
 func load_level3():
 	print("Loading Race Scene...")
-	engine_collected = false
+	
 	if current_level:
 		current_level.queue_free()
 		await get_tree().process_frame  # Wait one frame for queued node to actually be removed
@@ -200,3 +201,4 @@ func load_level3():
 
 	if racenode:
 		racenode.connect("end_of_game", Callable(self, "_on_end_of_game"))
+	engine_collected = false
