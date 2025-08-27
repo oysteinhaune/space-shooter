@@ -29,6 +29,7 @@ var boss_spawn_triggered = false
 
 signal boss_spawned
 signal turn_off_enemies
+signal end_of_game
 
 func _ready():
 	get_tree().call_group('ui', 'set_health', player_health)
@@ -82,7 +83,7 @@ func spawn_boss():
 
 	# Connect to the boss_defeated signal
 	if boss_instance.has_signal("boss_defeated"):
-		boss_instance.connect("boss_defeated", Callable(self, "_on_boss_killed").bind(boss_instance))
+		boss_instance.connect("boss_defeated", Callable(self, "_on_boss_killed"))
 
 
 	emit_signal("boss_spawned")
@@ -93,9 +94,8 @@ func spawn_boss():
 	if boss_instance.has_method("move_down"):
 		boss_instance.move_down(0)
 		
-func _on_boss_killed(boss_instance):
-	print("Boss defeated signal received!")
-	call_deferred("_spawn_engine_drop", boss_instance.global_position)
+func _on_boss_killed():
+	emit_signal("end_of_game")
 	
 func _spawn_engine_drop(drop_position: Vector2) -> void:
 	var engine_scene = load("res://scenes/boss_engine.tscn")
@@ -147,12 +147,6 @@ func spawn_road(index: int, row: int):
 
 	$Roads.add_child(new_road) # Add the new road to the Roads node
 	return new_road # Return reference to store in list
-
-func change_scene():
-	call_deferred("_deferred_change_scene")
-
-func _deferred_change_scene():
-	get_tree().change_scene_to_file(game_over_scene)
 
 func _on_spawner_engine_collected():
 	engines_collected += 1

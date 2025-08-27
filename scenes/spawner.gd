@@ -14,7 +14,6 @@ const ENGINE_TEXTURES = [
 ]
 
 # Timer to control spawn intervals
-var spawn_timer: Timer
 var gap = 150  # Horizontal gap between enemies
 var offset_left = -200  # Horizontal offset for variation
 
@@ -24,8 +23,10 @@ signal engine_collected
 # Initialization
 func _ready():
 	# Enemy spawning
+	print('ready')
+	if not $EnemyTimer.is_connected("timeout", Callable(self, "_on_spawn_timeout")):
+		$EnemyTimer.connect("timeout", Callable(self, "_on_spawn_timeout"))
 	$EnemyTimer.one_shot = false
-	$EnemyTimer.connect("timeout", Callable(self, "_on_spawn_timeout"))
 	$EnemyTimer.start()
 
 	# Engine spawning
@@ -39,9 +40,10 @@ func _on_spawn_timeout():
 
 # This function will spawn a single enemy
 func spawn_enemy():
+	
 	var enemies_node = get_parent().get_node("Enemies")  # Assuming 'Enemies' is the parent node
 	var enemy = enemy_scene.instantiate()
-
+	print("Spawning enemy:", enemy)
 	# Randomly choose between moving down or swaying
 	var random_move_type = randi() % 2  # Generates either 0 or 1
 	if random_move_type == 0:
@@ -94,7 +96,6 @@ func _on_enemy_ship_laser(laser_position: Vector2):
 	lasers_node.call_deferred("add_child", laser)
 	
 	laser.global_position = laser_position + Vector2(-14, 0)
-
 
 func _on_race_scene_boss_spawned():
 	spawn_boss()

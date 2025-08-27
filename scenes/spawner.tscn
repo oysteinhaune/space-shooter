@@ -6,7 +6,6 @@
 script = ExtResource("1_1ds6c")
 
 [node name="EnemyTimer" type="Timer" parent="."]
-autostart = true
 
 [node name="EngineTimer" type="Timer" parent="."]
 wait_time = 10.0

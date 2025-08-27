@@ -139,4 +139,6 @@ autoplay = true
 position = Vector2(636, 357)
 
 [connection signal="collision" from="Player" to="." method="_on_player_collision"]
+[connection signal="player_died" from="Player" to="." method="_on_player_player_died"]
 [connection signal="timeout" from="MeteorTimer" to="." method="_on_meteor_timer_timeout"]
+[connection signal="boss_level_ready" from="UI" to="." method="_on_ui_boss_level_ready"]

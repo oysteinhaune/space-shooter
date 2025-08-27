@@ -4,18 +4,11 @@ var health: int = 3
 var laser_scene: PackedScene = load("res://scenes/laser.tscn")
 var is_invincible = false
 var is_dead = false
+signal race_level_ready
 
 func _ready():
 	get_tree().call_group('ui', 'set_health', health)
 	$UI/MarginContainer.queue_free()
-	var boss = $Boss1Character
-	boss.boss_defeated.connect(_on_boss_defeated)
-		
-func go_to_game_over():
-	get_tree().change_scene_to_file("res://scenes/game_over.tscn")
-	
-func _deferred_change_scene():
-	get_tree().change_scene_to_file("res://scenes/main/race_scene.tscn")
 
 func show_victory_message():
 	display_initial_message()
@@ -50,8 +43,5 @@ func display_victory_message():
 
 func _on_music_finished():
 	$Music.play()
-	
-func _on_boss_defeated():
-	print("Boss defeated! Start engine sequence...")
 
 

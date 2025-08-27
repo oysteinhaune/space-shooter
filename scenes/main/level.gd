@@ -4,6 +4,7 @@ signal game_over
 
 enum LevelState { PLAYING, GAME_OVER }
 var current_state = LevelState.PLAYING
+signal player_died
 
 var meteor_scene: PackedScene = load("res://scenes/meteor.tscn")
 var laser_scene: PackedScene = load("res://scenes/laser.tscn")
@@ -20,6 +21,7 @@ func _ready():
 		star.scale = Vector2(random_scale, random_scale)
 		
 		star.speed_scale = rng.randf_range(0.6, 1.4)
+	$UI.set_health(3)
 
 func _on_meteor_timer_timeout():
 	if current_state != LevelState.PLAYING:
@@ -36,3 +38,7 @@ func change_state(new_state):
 			$MeteorTimer.start()
 		LevelState.GAME_OVER:
 			$MeteorTimer.stop()
+
+
+func _on_player_player_died():
+	player_died.emit()

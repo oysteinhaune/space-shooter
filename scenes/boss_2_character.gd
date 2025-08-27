@@ -71,7 +71,6 @@ func _on_area_entered(area: Area2D) -> void:
 		area.queue_free()
 
 		if boss_health <= 0:
-			get_tree().change_scene_to_packed(level_scene)
-			queue_free()
+			emit_signal('boss_defeated')
 	
 

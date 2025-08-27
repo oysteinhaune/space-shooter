@@ -2,11 +2,9 @@ extends Control
 
 #@export var level_scene: PackedScene
 @onready var level_scene = preload("res://scenes/main/level.tscn")
-signal game_restart
 
-func _ready():
-	$CenterContainer/VBoxContainer/Label2.text = $CenterContainer/VBoxContainer/Label2.text + str(Global.score)
+signal start_game_pressed
 
 func _input(event):
 	if event.is_action_pressed("reset"):
-		emit_signal("game_restart")
+		emit_signal("start_game_pressed")
