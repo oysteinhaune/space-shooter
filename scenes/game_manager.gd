@@ -174,7 +174,7 @@ func _on_engine_picked_up():
 
 func load_level3():
 	print("Loading Race Scene...")
-
+	engine_collected = false
 	if current_level:
 		current_level.queue_free()
 		await get_tree().process_frame  # Wait one frame for queued node to actually be removed
